@@ -1,0 +1,28 @@
+{
+  "name": "c3io",
+  "main": "lib/c3io",
+  "version": "0.1.0",
+  "description": "tests and scapes webpages",
+  "repository": "https://github.com/fentas/c3io",
+  "license": "AGPL-3.0",
+  "dependencies": {
+
+  },
+  "author": "Jan Guth <jan.guth.so>",
+  "contributors": [{
+    "name": "Jan Guth",
+    "email": "jan.guth@gmail.com",
+    "url": "jan.guth.so"
+  }],
+  "keywords": [
+    "stdio",
+    "inter-process communication"
+  ],
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-util": "^3.0.5"
+  },
+  "scripts": {
+
+  }
+}
