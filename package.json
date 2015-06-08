@@ -2,7 +2,7 @@
   "name": "c3io",
   "main": "lib/c3io",
   "version": "0.1.0",
-  "description": "tests and scapes webpages",
+  "description": "c3io exploits inter-process communication in order to communicate with other processes.",
   "repository": "https://github.com/fentas/c3io",
   "license": "AGPL-3.0",
   "dependencies": {
