@@ -52,7 +52,7 @@ var system = require('system'),
 
 system.stdout.write('Hello, system.stdout.write!\n');
 
-system.stderr.writeLine("c3io!req");
+system.stdout.writeLine("c3io!req");
 var line = system.stdin.readLine();
 system.stdout.writeLine(line);
 
@@ -84,7 +84,30 @@ c3io!__stp__ is [c3docker](https://github.com/fentas/c3docker) specific.
 It's possible to define your own commands.
 
 ```node
+var c3io = require('c3io')
 
+c3io.r2d2.wrt = function(_data) {
+  // create response
+  var write = function() {
+    c3io.r2d2.call(this, _data)
+    // do stuff e.g. write data to filesystem
+    require('fs').writeFile('example.txt', _data)
+  }
+  // inheriting from c3io.r2d2 makes sure that standard methods are given in the response
+  // c3io.r2d2 inherits from Buffer
+  util.inherits(write, c3io.r2d2)
+  return new write;
+}
+```
+
+And executing the command in child process.
+
+```js
+var system = require('system'),
+    file_c = "Write something to File!"
+
+// if you have line breaks within string make sure to handle them. e.g. through serializing.
+system.stdout.writeLine("c3io!wrt" + file_c);
 ```
 
 ### Installation
