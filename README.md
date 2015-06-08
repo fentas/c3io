@@ -10,7 +10,7 @@ __WORK IN PROGRESS - NOT STABLE__
 
 ## Use cases
 
-Have a look at [c3docker](https://github.com/fentas/c3docker) using it as means
+Have a look at [c3docker](https://github.com/fentas/c3docker) using c3io as means
 of communicating with [docker](https://github.com/docker/docker) container.
 
 ## Basic usage
@@ -59,7 +59,7 @@ casper.echo('c3io!stp');
 casper.exit();
 ```
 
-__notice__ for c3io is each line a command to be pass on. For that make sure it
+__notice__ for c3io is each line a command to be passed on. For that make sure it
 ends with an EOL.
 
 As you maybe noticed there is also the abillity to push for certain commands.
@@ -70,11 +70,12 @@ You can change the initial sequence within the enviroment.
 env c3ctr="foo" c3len=1 node example.js
 ```
 
-c3len configures how long the command name is. [default: 3]
-Default there are following sequences. (for usage see latter example)
+`c3len` configures how long the command name is. [_default: 3_]
+Currently there are following sequences. (for usage see latter example)
 
 * c3io!__req__
-> triggers an message event in order to replay to the input request
+
+>> triggers an message event in order to replay to the input request
 
 c3io!__stp__ is [c3docker](https://github.com/fentas/c3docker) specific.
 
