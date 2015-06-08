@@ -1,8 +1,7 @@
 # c3io
 
-c3io exploits stdin and stdout for [inter-process communication](http://en.wikipedia.org/wiki/Inter-process_communication).
-For that each communication will be passed through and processed accordingly.
-Or you could use it as means of communication of Streams..?
+c3io exploits stdin and stdout for [inter-process communication](http://en.wikipedia.org/wiki/Inter-process_communication)
+in order to communicate with other processes.
 
 If you only want to communicate with parent to child in nodejs you simply can use
 standard [child_process communication](https://nodejs.org/api/child_process.html#child_process_child_send_message_sendhandle).
