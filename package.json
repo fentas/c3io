@@ -16,7 +16,8 @@
   }],
   "keywords": [
     "stdio",
-    "inter-process communication"
+    "inter-process communication",
+    "child process"
   ],
   "devDependencies": {
     "gulp": "^3.8.11",
