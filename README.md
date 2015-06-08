@@ -75,13 +75,13 @@ Currently there are following sequences. (for usage see latter example)
 
 * c3io!__req__
 
->> triggers an message event in order to replay to the input request
+> triggers an message event in order to replay to the input request
 
-c3io!__stp__ is [c3docker](https://github.com/fentas/c3docker) specific.
+*c3io!__stp__ is [c3docker](https://github.com/fentas/c3docker) specific.*
 
 #### custom commands
 
-It's possible to define your own commands.
+It is possible to define your own commands.
 
 ```node
 var c3io = require('c3io')
