@@ -1,4 +1,4 @@
-# c3io
+# c3io [![Build Status](https://travis-ci.org/fentas/c3io.svg)](https://travis-ci.org/fentas/c3io)
 
 c3io exploits stdin and stdout for [inter-process communication](http://en.wikipedia.org/wiki/Inter-process_communication)
 in order to communicate with other processes.
