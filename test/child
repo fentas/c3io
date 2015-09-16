@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+var argv = require('minimist')(process.argv.slice(2))
+
+function send(stream, msg) {
+  switch (argv.protocol) {
+    case 'native':
+      var msg = new Buffer(msg),
+          length = new Buffer(4); length.writeInt32LE(msg.length, 0)
+      stream.write(length)
+      stream.write(msg)
+      break;
+    default:
+      stream.write(msg + '\n');
+  }
+}
+function read() {
+
+}
+
+switch (argv.test) {
+  case 'stdout':
+    send(process.stdout, 'test: stdout')
+    process.exit(0)
+    break
+  case 'stderr':
+    send(process.stderr, 'test: stderr')
+    process.exit(0)
+    break
+  case 'stdin':
+    process.stdin.setEncoding('utf8')
+    process.stdin.on('readable', function() {
+      var chunk = process.stdin.read()
+      if (chunk !== null) {
+        send(process.stdout, chunk.trim().toUpperCase()+'..')
+        process.exit(0)
+      }
+    })
+
+    send(process.stdout, 'c3io!req'+'test: stdin')
+    break
+  case 'c3io!wrt':
+    send(process.stdout, 'c3io!wrt'+'test: c3io!wrt')
+    break
+  default:
+    process.exit(2)
+}

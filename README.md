@@ -15,8 +15,8 @@ of communicating with [docker](https://github.com/docker/docker) container.
 
 ## Basic usage
 
-```node
-var c3io  = require('c3io')(),
+```nodejs
+var c3io  = require('c3io')(options),
     spawn = require('child_process').spawn
 
 c3io.on('message', function(msg) {
@@ -38,7 +38,7 @@ c3io.on('message', function(msg) {
 var child = spawn(
     'casperjs',
     ['test.js'],
-    {stdio: c3io})
+    {stdio: c3io.stdio})
 ```
 
 First a new c3io instance is created, which is basically an [EventEmitter](https://nodejs.org/api/events.html).
@@ -59,12 +59,12 @@ casper.echo('c3io!stp');
 casper.exit();
 ```
 
-__notice__ for c3io is each line a command to be passed on. For that make sure it
-ends with an EOL.
+__notice__ [ _default_ ] for c3io is each line a command to be passed on. For that make sure it
+ends with an EOL. You can change this behavior with `options.protocol`.
 
-As you maybe noticed there is also the abillity to push for certain commands.
+As you maybe noticed there is also the ability to push for certain commands.
 First there is the initial `c3io!` telling c3io to look for the given command.
-You can change the initial sequence within the enviroment.
+You can change the initial sequence within the environment.
 
 ```sh
 env c3ctr="foo" c3len=1 node example.js
@@ -78,6 +78,15 @@ Currently there are following sequences. (for usage see latter example)
 > triggers an message event in order to replay to the input request
 
 *c3io!__stp__ is [c3docker](https://github.com/fentas/c3docker) specific.*
+
+#### options
+
+* __protocol__ [ newline | native ] ~
+_The same format is used to send messages in both directions._  
+`newline`  
+each line is a command to be passed on. For that make sure it ends with an EOL.  
+`native`  
+each message is serialized using Buffer and is preceded with 32-bit message length in native byte order.
 
 #### custom commands
 

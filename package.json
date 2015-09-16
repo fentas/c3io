@@ -1,14 +1,11 @@
 {
   "name": "c3io",
   "main": "lib/c3io",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "c3io exploits inter-process communication in order to communicate with other processes.",
   "repository": "https://github.com/fentas/c3io",
   "license": "AGPL-3.0",
-  "dependencies": {
-
-  },
-  "author": "Jan Guth <jan.guth.so>",
+  "author": "Jan Guth <jan.guth@gmail.com>",
   "contributors": [{
     "name": "Jan Guth",
     "email": "jan.guth@gmail.com",
@@ -19,11 +16,15 @@
     "inter-process communication",
     "child process"
   ],
+  "dependencies": {
+
+  },
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-util": "^3.0.5"
+    "minimist": "^1.2.0",
+    "mocha": "^2.2.5",
+    "should": "^7.0.1"
   },
   "scripts": {
-
+    "test": "./node_modules/mocha/bin/mocha --reporter spec"
   }
 }
