@@ -11,7 +11,7 @@ describe('c3io', function() {
 
   function todo(protocol) {
     it('stdout', function(done) {
-      var child = spawn('./child', ['--protocol', 'newline', '--test', 'stdout']),
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'stdout']),
           c3io = new _c3io({ protocol: protocol, stdio: child})
 
       c3io.on('stdout', function(msg) {
@@ -21,7 +21,7 @@ describe('c3io', function() {
     })
 
     it('stderr', function(done) {
-      var child = spawn('./child', ['--protocol', 'newline', '--test', 'stderr']),
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'stderr']),
           c3io = new _c3io({ protocol: protocol, stdio: child})
 
       c3io.on('stderr', function(msg) {
@@ -30,7 +30,7 @@ describe('c3io', function() {
       })
     })
     it('stdin', function(done) {
-      var child = spawn('./child', ['--protocol', 'newline', '--test', 'stdin']),
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'stdin']),
           c3io = new _c3io({ protocol: protocol, stdio: child})
 
       c3io
@@ -44,7 +44,7 @@ describe('c3io', function() {
       })
     })
     it('custom command', function(done) {
-      var child = spawn('./child', ['--protocol', 'newline', '--test', 'c3io!wrt']),
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'c3io!wrt']),
           c3io = new _c3io({ protocol: protocol, stdio: child})
 
       _c3io.r2d2.wrt = function(_data) {
