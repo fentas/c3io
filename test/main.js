@@ -12,7 +12,7 @@ describe('c3io', function() {
   function todo(protocol) {
     it('stdout', function(done) {
       var child = spawn('./child', ['--protocol', protocol, '--test', 'stdout']),
-          c3io = new _c3io({ protocol: protocol, stdio: child})
+          c3io = new _c3io({ protocol: protocol }).pipe(child)
 
       c3io.on('stdout', function(msg) {
         msg.toString('utf8').should.equal('test: stdout')
@@ -22,7 +22,7 @@ describe('c3io', function() {
 
     it('stderr', function(done) {
       var child = spawn('./child', ['--protocol', protocol, '--test', 'stderr']),
-          c3io = new _c3io({ protocol: protocol, stdio: child})
+          c3io = new _c3io({ protocol: protocol }).pipe(child)
 
       c3io.on('stderr', function(msg) {
         msg.toString('utf8').should.equal('test: stderr')
@@ -31,7 +31,7 @@ describe('c3io', function() {
     })
     it('stdin', function(done) {
       var child = spawn('./child', ['--protocol', protocol, '--test', 'stdin']),
-          c3io = new _c3io({ protocol: protocol, stdio: child})
+          c3io = new _c3io({ protocol: protocol }).pipe(child)
 
       c3io
       .on('stdin', function(msg) {
@@ -45,14 +45,32 @@ describe('c3io', function() {
     })
     it('custom command', function(done) {
       var child = spawn('./child', ['--protocol', protocol, '--test', 'c3io!wrt']),
-          c3io = new _c3io({ protocol: protocol, stdio: child})
+          c3io = new _c3io({ protocol: protocol }).pipe(child)
 
-      _c3io.r2d2.wrt = function(_data) {
+      c3io.r2d2.wrt = function(_data) {
         this.emit('write', _data.toString('utf8'))
       }
 
       c3io.on('write', function(msg) {
         msg.should.equal('test: c3io!wrt')
+        done()
+      })
+    })
+    it('pipe to stderr', function(done) {
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'c3io!wrt']),
+          c3io = new _c3io({
+            protocol: protocol,
+            r2d2: {
+              wrt: function(_data) {
+                _data.toString('utf8').should.equal('test: c3io!wrt')
+                _data.stderr = true
+                return _data
+              }
+            }
+          }).pipe(child)
+      
+      c3io.on('stderr', function(msg) {
+        msg.toString('utf8').should.equal('test: c3io!wrt')
         done()
       })
     })
