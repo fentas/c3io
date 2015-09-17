@@ -37,8 +37,9 @@ c3io.on('message', function(msg) {
 
 var child = spawn(
     'casperjs',
-    ['test.js'],
-    {stdio: c3io.stdio})
+    ['test.js'])
+
+c3io.pipe(child)
 ```
 
 First a new c3io instance is created, which is basically an [EventEmitter](https://nodejs.org/api/events.html).
@@ -95,17 +96,10 @@ It is possible to define your own commands.
 ```node
 var c3io = require('c3io')
 
-c3io.r2d2.wrt = function(_data) {
-  // create response
-  var write = function() {
-    c3io.r2d2.call(this, _data)
-    // do stuff e.g. write data to filesystem
-    require('fs').writeFile('example.txt', _data)
-  }
-  // inheriting from c3io.r2d2 makes sure that standard methods are given in the response
-  // c3io.r2d2 inherits from Buffer
-  util.inherits(write, c3io.r2d2)
-  return new write;
+c3io.options.r2d2.wrt = function(_data) {
+  require('fs').writeFile('example.txt', _data)
+  // skip message (no event will be emitted)
+  return null
 }
 ```
 
@@ -118,6 +112,9 @@ var system = require('system'),
 // if you have line breaks within string make sure to handle them. e.g. through serializing.
 system.stdout.writeLine("c3io!wrt" + file_c);
 ```
+
+#### more examples
+Please refer to `test/main.js`
 
 ### Installation
 
