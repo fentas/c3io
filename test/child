@@ -41,6 +41,9 @@ switch (argv.test) {
   case 'c3io!wrt':
     send(process.stdout, 'c3io!wrt'+'test: c3io!wrt')
     break
+  case 'base64':
+    send(process.stdout, (new Buffer('test: base64').toString('base64')))
+    break
   default:
     process.exit(2)
 }

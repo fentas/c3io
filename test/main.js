@@ -19,7 +19,6 @@ describe('c3io', function() {
         done()
       })
     })
-
     it('stderr', function(done) {
       var child = spawn('./child', ['--protocol', protocol, '--test', 'stderr']),
           c3io = new _c3io({ protocol: protocol }).pipe(child)
@@ -68,9 +67,33 @@ describe('c3io', function() {
               }
             }
           }).pipe(child)
-      
+
       c3io.on('stderr', function(msg) {
         msg.toString('utf8').should.equal('test: c3io!wrt')
+        done()
+      })
+    })
+    it('communicating in base64 [c3po]', function(done) {
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'base64']),
+          c3io = new _c3io({ protocol: protocol }).pipe(child),
+          foo = false
+
+
+      c3io.r2d2 = {
+        c3po: function(_data) {
+          (_data = _data.toString('utf8')).should.equal('dGVzdDogYmFzZTY0')
+          return Buffer.concat([Buffer('c3io!foo'), Buffer(_data, 'base64')])
+        },
+        foo: function(msg) {
+          foo = true
+          msg = msg.toString('utf8')
+          msg.should.equal('test: base64')
+          return msg
+        }
+      }
+      c3io.on('stdout', function(msg) {
+        foo.should.equal(true)
+        msg.should.equal('test: base64')
         done()
       })
     })
