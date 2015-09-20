@@ -97,6 +97,20 @@ describe('c3io', function() {
         done()
       })
     })
+    it('predefined emit listener', function(done) {
+      _c3io.options.r2d2.c3po = function(_data) {
+        this.emit('foobar', _data.toString('utf8'))
+      }
+      _c3io.on('foobar', function(msg) {
+        msg.should.equal('test: stdout')
+        // remove emit listener
+        _c3io.on('foobar')
+        delete _c3io.options.r2d2.c3po
+        done()
+      })
+      var child = spawn('./child', ['--protocol', protocol, '--test', 'stdout']),
+          c3io = new _c3io({ protocol: protocol }).pipe(child)
+    })
   }
 
   describe('protocol [newline]', function() { todo.call(this, 'newline') })
